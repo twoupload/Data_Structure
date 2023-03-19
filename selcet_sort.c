@@ -32,9 +32,8 @@ void Sort(int* list, int len) {
 			if (list[j] < list[min]) {
 				min = j;
 			}
-
-			Swap(&list[i], &list[min]);
 		}
+		Swap(&list[i], &list[min]);
 	}
 }
 
