@@ -1,4 +1,4 @@
-#include <stdio.h> 
+#include <stdio.h> // main 함수를 시작하기 위한 헤더
 #include <stdlib.h> 
 #include <ctype.h> // digit 함수를 시작하기 위한 헤더
 #include <string.h>// strlen 함수를 시작하기 위한 헤더
@@ -18,7 +18,7 @@ void Push(Stack* pstack, Data item); // 스택에 값을 집어넣는 함수
 void Pop(Stack* pstack); // 스택에 top 값을 삭제하는 함수
 Data Peek(Stack* pstack); // 스택의 top 값을 반환하는 함수
 
-bool ComPriority(char exp1, char exp2);
+bool ComPriority(Data c1, char c2);
 void ConvInfixToPostfix(char* str, char* conv, int len); // Infix를 Postfix로 변환하는 함수
 
 int main(void) { // main 함수
@@ -31,6 +31,10 @@ int main(void) { // main 함수
 	len = strlen(exp); // strlen을 통해 exp의 길이를 구함
 
 	ConvInfixToPostfix(exp, convExp, len); // exp를 conv하여 convExp함수에 집어넣는 함수
+
+	for (int i = 0; i < len; i++) {
+		printf("%c ", convExp[i]);
+	}
 
 	return 0;
 }
@@ -59,6 +63,7 @@ Data Peek(Stack* pstack) {
 
 bool ComPriority(Data c1, char c2) {
 	int p1, p2;
+	c1 = (char)c1;
 
 	if (c1 == '*' || c1 == '/') {
 		p1 = 5;
@@ -74,8 +79,8 @@ bool ComPriority(Data c1, char c2) {
 		p2 = 2;
 	}
 
-	if (p1 >= p2) return false;
-	else return true;
+	if (p1 >= p2) return true;
+	else return false;
 }
 
 void ConvInfixToPostfix(char* exp, char* convExp, int len) {
