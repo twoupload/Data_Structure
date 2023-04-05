@@ -64,29 +64,54 @@ double prefix_calculate(char* expression) {
     int len, idx = 0;
     double p1, p2, s;
     char revExpression[MAX_LEN] = "";
-
-
     len = strlen(expression);
 
     for (int i = len - 1; i >= 0; i--) {
         revExpression[idx++] = expression[i];
     }
-
     for (int i = 0; i < len; i++) {
-        if (isdigit(revExpression[i])) push(&stack, revExpression[i] - '0');
+        double num = 0; 
+        int temp;
+        int power = 1, t_power, sw = 0;
+        int j = i;
+
+        if (isdigit(revExpression[j])) {
+            while (isdigit(revExpression[j])) {
+                num += (revExpression[j++] - '0') * power;
+                power *= 10;
+            }
+            i = j;
+            if (revExpression[j] == '.') {
+                temp = num;
+                t_power = power;
+                num = 0;
+                power = 1;
+                sw = 1;
+
+                while (isdigit(revExpression[j + 1])) {
+                    num += (revExpression[++j] - '0') * power;
+                    power *= 10;
+                }
+                i = j;
+            }
+
+            if (sw == 1) num += 1.0 * temp / t_power;
+            push(&stack, num);
+        }
+
         else {
-            if (getPriority(revExpression[i]) == 0) continue;
+            if (getPriority(revExpression[j]) == 0) continue;
             else {
                 p1 = peek(&stack);
                 pop(&stack);
                 p2 = peek(&stack);
                 pop(&stack);
-                if (getPriority(revExpression[i]) == 2) {
-                    if (revExpression[i] == '*') push(&stack, p1 * p2);
-                    else push(&stack, p1 / p2);
+                if (getPriority(revExpression[j]) == 2) {
+                    if (revExpression[j] == '*') push(&stack, p1 * p2);
+                    else if (revExpression[j] == '/') push(&stack, p1 / p2);
                 }
                 else {
-                    if (revExpression[i] == '+') push(&stack, p1 + p2);
+                    if (revExpression[j] == '+') push(&stack, p1 + p2);
                     else push(&stack, p1 - p2);
                 }
             }
