@@ -1,6 +1,6 @@
 // Array
-#include <stdio.h>
-#define ARRAY_SIZE 5
+//#include <stdio.h>
+//#define ARRAY_SIZE 5
 
 /**
 int main(void)
@@ -67,6 +67,7 @@ double computeAverage(int num[], int len)
 **/
 
 // Two-Dimensional Arrays
+/**
 int main(void)
 {
 	int row, col, matrix[6][6];
@@ -93,3 +94,4 @@ int main(void)
 		printf("\n");
 	}
 }
+**/

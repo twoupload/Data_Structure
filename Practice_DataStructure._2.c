@@ -1,7 +1,7 @@
 // Pointer
 
-#include <stdio.h>
-#include <stdlib.h>
+//#include <stdio.h>
+//#include <stdlib.h>
 
 // Reference operator
 /**
@@ -307,12 +307,14 @@ void geneNumbers(int* pn, int s)
 
 // structure
 
-typedef struct
-{
-	char name[10];
-	int scores[3];
-	int total;
-} student;
+
+//typedef struct
+//{
+	//char name[10];
+	//int scores[3];
+	//int total;
+//} student;
+
 /**
 int main(void)
 {
@@ -401,6 +403,7 @@ void Selection(int* list, int n)
 **/
 
 // Asymptotic Notation
+/**
 int search(int arr[], int len, int target)
 {
 	for (int i = 0; i < len; i++)
@@ -431,3 +434,4 @@ int BSearch(int arr[], int len, int target)
 	}
 	return -1;
 }
+**/

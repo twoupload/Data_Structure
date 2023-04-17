@@ -1,3 +1,4 @@
+/**
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -58,3 +59,4 @@ void DeQueue(DQueue* pqueue)
 		pqueue->front = temp->next;
 	free(temp);
 }
+**/

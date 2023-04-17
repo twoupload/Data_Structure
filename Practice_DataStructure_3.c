@@ -1,5 +1,5 @@
 // Recursive
-#include <stdio.h>
+//#include <stdio.h>
 
 /**
 void Recursive(int n) {
@@ -162,6 +162,7 @@ int rpower2(int x, int n)
 **/
 
 // Fibonacci Numbers
+/**
 int fibo(int n)
 {
 	if (n == 1 || n == 2) return 1;
@@ -196,3 +197,4 @@ int findMax(int* arr, int n, int max)
 			max = arr[n - 1];
 	}
 }
+**/
