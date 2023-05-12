@@ -1,6 +1,3 @@
-// BrowserHistory visit visit visit back back forward visit forward back back
-// hufs.ac.kr google.com naver.com youtube.com 1 1 1 linkedin.com 2 2 7
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -21,14 +18,14 @@ typedef struct {
 // DO NOT MODIFY //
 
 BrowserHistory* browserHistoryCreate(char* homepage) {
-    BrowserHistory* history = (BrowserHistory*)malloc(sizeof(BrowserHistory)); // 커서와 헤드를 위한 구조체 포인터 생성
+    BrowserHistory* history =(BrowserHistory*)malloc(sizeof(BrowserHistory)); // 커서와 헤드를 위한 구조체 포인터 생성
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node)); // 새로운 노드 생성
 
     // 새로운 노드에 값을 추가
     strcpy(newNode->url, homepage);
 
     // 전과 후의 노드의 내용은 없다.
-    newNode->prev = NULL;
+    newNode->prev = NULL; 
     newNode->next = NULL;
 
     // 커서와 헤드를 맞춰준다. 
@@ -40,39 +37,32 @@ BrowserHistory* browserHistoryCreate(char* homepage) {
 }
 
 void browserHistoryVisit(BrowserHistory* obj, char* url) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->prev = NULL;
-    newNode->next = NULL;
+    struct Node* newNode;
+    struct Node* deleteNode;
 
-    memset(newNode->url, 0, sizeof newNode->url);
+    newNode = malloc(sizeof(struct Node));
+
+    if (!newNode) {
+        perror("Memory Alocation Error"); // 오류
+        return;
+    }
+
+    memset(newNode, 0, sizeof(struct Node));
     strncpy(newNode->url, url, strlen(url));
 
-    if (obj->cursor->next == NULL) {
+    newNode->prev = obj->cursor;
 
-        newNode->prev = obj->cursor; // 새 노드의 이전은 커서
+    deleteNode = obj->cursor->next;
 
-        obj->cursor->next = newNode; // 커서의 다음은 새 노드
+    obj->cursor->next = newNode;
 
-        obj->cursor = newNode; // 커서 옮김
+    while (deleteNode) {
+        struct Node* temp = deleteNode;
+        deleteNode = deleteNode->next;
+        free(temp);
     }
 
-    else {
-        struct Node* tmp;// 임시 노드
-
-        tmp = obj->cursor->next; // 커서 다음은 임시 노드
-
-        newNode->prev = obj->cursor; // 새 노드 이전이 커서
-
-        obj->cursor->next = newNode; // 현재 지정노드(커서) 다음이 새 노드
-
-        obj->cursor = newNode; // 커서 이동
-
-        while (tmp != NULL) { // temp 포함 커서 이후 모든 노드 삭제
-            struct Node* deleteNode = tmp;
-            tmp = tmp->next;
-            free(deleteNode);
-        }
-    }
+    obj->cursor = obj->cursor->next;
 }
 
 char* browserHistoryBack(BrowserHistory* obj, int steps) {
